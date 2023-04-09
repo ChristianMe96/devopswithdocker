@@ -1,4 +1,4 @@
-# Solution For Exercise 1.11: Hello, Frontend!
+# Solution For Exercise 1.12: Hello Frontend!
 ### 1. Build the Image
     docker build . -t example-frontend
 
