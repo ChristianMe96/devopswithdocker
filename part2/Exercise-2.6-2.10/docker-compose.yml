@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  #added with Exercise 2.8
+  nginx:
+    image: nginx:1.24-alpine
+    ports:
+      - '80:80'
+    depends_on:
+      - backend
+      - frontend
+    volumes:
+      - ./.docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+
+  frontend:
+    build: ./.docker/frontend
+    depends_on:
+      - backend
+
+  backend:
+    build: ./.docker/backend
+    environment:
+      REDIS_HOST: 'redis'
+      POSTGRES_HOST: 'db'
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:13.2-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: 'postgres'
+    volumes:
+    #./database added with Exercise 2.7
+      - ./database:/var/lib/postgresql/data
+
+  redis:
+    image: redis
+    build: .
