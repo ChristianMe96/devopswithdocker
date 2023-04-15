@@ -12,4 +12,7 @@ cd "$1" || exit 1
 
 docker build . -t "$2"
 
+#Added with Exercise 3.4
+docker login -u "$DOCKER_USER" -p "$DOCKER_PWD"
+
 docker push "$2"
